@@ -1,0 +1,1 @@
+"""Uni Hildesheim email notifier."""

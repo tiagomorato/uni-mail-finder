@@ -1,0 +1,31 @@
+[project]
+name = "uni-mail-finder"
+version = "0.1.0"
+description = "Telegram notifier for new University of Hildesheim emails over IMAP"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "imap-tools",
+    "requests",
+    "python-dotenv",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "responses",
+    "ruff",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

@@ -30,11 +30,11 @@ Single-project Python CLI (per plan.md): `src/` and `tests/` at repository root.
 
 **Purpose**: Project initialization, dependencies, and tooling
 
-- [ ] T001 Create the project directory structure at the repo root: `src/`, `tests/unit/`, `tests/e2e/`, `deploy/`, and `data/` with a `data/.gitkeep`
-- [ ] T002 Create `pyproject.toml` as a `uv` project (Python ≥ 3.10) with runtime deps `imap-tools`, `requests`, `python-dotenv` and dev deps `pytest`, `responses`, `ruff`; run `uv sync` to generate `uv.lock`
-- [ ] T003 [P] Configure Ruff lint + format in `pyproject.toml` (`select = ["E","F","I","W"]`, `line-length = 88`)
-- [ ] T004 [P] Create `.gitignore` ignoring `.env`, `data/` (except `.gitkeep`), `__pycache__/`, `.venv/`, and `*.pyc`
-- [ ] T005 [P] Create `.env.example` with every variable from `contracts/config.md` (non-secret defaults filled, secrets left blank with comments)
+- [X] T001 Create the project directory structure at the repo root: `src/`, `tests/unit/`, `tests/e2e/`, `deploy/`, and `data/` with a `data/.gitkeep`
+- [X] T002 Create `pyproject.toml` as a `uv` project (Python ≥ 3.10) with runtime deps `imap-tools`, `requests`, `python-dotenv` and dev deps `pytest`, `responses`, `ruff`; run `uv sync` to generate `uv.lock`
+- [X] T003 [P] Configure Ruff lint + format in `pyproject.toml` (`select = ["E","F","I","W"]`, `line-length = 88`)
+- [X] T004 [P] Create `.gitignore` ignoring `.env`, `data/` (except `.gitkeep`), `__pycache__/`, `.venv/`, and `*.pyc`
+- [X] T005 [P] Create `.env.example` with every variable from `contracts/config.md` (non-secret defaults filled, secrets left blank with comments)
 
 ---
 
@@ -44,11 +44,11 @@ Single-project Python CLI (per plan.md): `src/` and `tests/` at repository root.
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T006 Implement `src/config.py`: load `.env` via `python-dotenv`, parse and validate all variables per `contracts/config.md`, return a frozen/immutable config object, fail fast with `Configuration error: <VAR> ...` to stderr naming the offending variable, and never echo `IMAP_PASSWORD` or `TELEGRAM_BOT_TOKEN`
-- [ ] T007 [P] Unit test config in `tests/unit/test_config.py`: defaults applied, missing required vars rejected, invalid `IMAP_PORT`/`SCHEDULE_*`/`TIMEZONE`/`DIGEST_THRESHOLD` rejected, `SCHEDULE_END ≥ SCHEDULE_START`, and secret values never appear in error messages
-- [ ] T008 Implement `src/storage.py`: `ProcessedState` schema per `contracts/state.md`, load (default when file absent), atomic save (temp file + `os.replace`) into `DATA_DIR`, diff helper returning UIDs `> last_processed_uid`, and helpers to update `last_run_at`/`last_status` without touching the watermark
-- [ ] T009 [P] Unit test storage in `tests/unit/test_storage.py` (use `tmp_path`): first-run baseline (no replay), normal diff (`uid > watermark`), atomic write survives, and `skipped`/`error` runs leave `last_processed_uid` unchanged
-- [ ] T010 Create `tests/conftest.py` shared fixtures: a tmp `DATA_DIR`/state path, sample message data (incl. missing subject and umlaut/encoded sender), and an in-process fake IMAP client exposing `uid`/`from_`/`subject`/`date` and `UIDVALIDITY`
+- [X] T006 Implement `src/config.py`: load `.env` via `python-dotenv`, parse and validate all variables per `contracts/config.md`, return a frozen/immutable config object, fail fast with `Configuration error: <VAR> ...` to stderr naming the offending variable, and never echo `IMAP_PASSWORD` or `TELEGRAM_BOT_TOKEN`
+- [X] T007 [P] Unit test config in `tests/unit/test_config.py`: defaults applied, missing required vars rejected, invalid `IMAP_PORT`/`SCHEDULE_*`/`TIMEZONE`/`DIGEST_THRESHOLD` rejected, `SCHEDULE_END ≥ SCHEDULE_START`, and secret values never appear in error messages
+- [X] T008 Implement `src/storage.py`: `ProcessedState` schema per `contracts/state.md`, load (default when file absent), atomic save (temp file + `os.replace`) into `DATA_DIR`, diff helper returning UIDs `> last_processed_uid`, and helpers to update `last_run_at`/`last_status` without touching the watermark
+- [X] T009 [P] Unit test storage in `tests/unit/test_storage.py` (use `tmp_path`): first-run baseline (no replay), normal diff (`uid > watermark`), atomic write survives, and `skipped`/`error` runs leave `last_processed_uid` unchanged
+- [X] T010 Create `tests/conftest.py` shared fixtures: a tmp `DATA_DIR`/state path, sample message data (incl. missing subject and umlaut/encoded sender), and an in-process fake IMAP client exposing `uid`/`from_`/`subject`/`date` and `UIDVALIDITY`
 
 **Checkpoint**: Config + state + fixtures ready — user stories can now begin
 
@@ -62,15 +62,15 @@ Single-project Python CLI (per plan.md): `src/` and `tests/` at repository root.
 
 ### Tests for User Story 1 ⚠️ (write first, ensure they FAIL)
 
-- [ ] T011 [P] [US1] Unit test mailbox in `tests/unit/test_mailbox.py` (fake IMAP client): fetches only `UID > watermark`, parses in ascending UID order, sender fallback `(unknown sender)`, subject fallback `(no subject)`, and reports the current mailbox max UID + UIDVALIDITY
-- [ ] T012 [P] [US1] Unit test notifier in `tests/unit/test_notifier.py` (`responses`): single-email format and `> DIGEST_THRESHOLD` digest format per `contracts/notification.md`, `delivered` true only on 2xx and false on non-2xx, umlauts render, and no secrets in payload
-- [ ] T013 [US1] e2e happy-path test in `tests/e2e/test_flow.py`: connect → fetch → diff → notify → watermark advance, with the IMAP client faked in-process and the Telegram call mocked via `responses`
+- [X] T011 [P] [US1] Unit test mailbox in `tests/unit/test_mailbox.py` (fake IMAP client): fetches only `UID > watermark`, parses in ascending UID order, sender fallback `(unknown sender)`, subject fallback `(no subject)`, and reports the current mailbox max UID + UIDVALIDITY
+- [X] T012 [P] [US1] Unit test notifier in `tests/unit/test_notifier.py` (`responses`): single-email format and `> DIGEST_THRESHOLD` digest format per `contracts/notification.md`, `delivered` true only on 2xx and false on non-2xx, umlauts render, and no secrets in payload
+- [X] T013 [US1] e2e happy-path test in `tests/e2e/test_flow.py`: connect → fetch → diff → notify → watermark advance, with the IMAP client faked in-process and the Telegram call mocked via `responses`
 
 ### Implementation for User Story 1
 
-- [ ] T014 [P] [US1] Implement `src/mailbox.py`: `EmailMessage` dataclass (uid, sender, subject, received_at), connect via `imap-tools` (SSL per config), fetch `UID > watermark` with header-only parsing and FR-010 fallbacks, and expose mailbox max UID + UIDVALIDITY
-- [ ] T015 [P] [US1] Implement `src/notifier.py`: `Notification` model, single-email and digest renderers per `contracts/notification.md`, POST to `https://api.telegram.org/bot<token>/sendMessage` via `requests`, mark delivered only on 2xx, escape text, and never include secrets
-- [ ] T016 [US1] Implement `src/main.py` core flow (`RUN_MODE=once`): load config → load state → first-run baseline (set watermark to mailbox max, no replay) → fetch new → render single messages or a digest by `DIGEST_THRESHOLD` → deliver → advance watermark per delivered UID → persist state with `last_status=ok`
+- [X] T014 [P] [US1] Implement `src/mailbox.py`: `EmailMessage` dataclass (uid, sender, subject, received_at), connect via `imap-tools` (SSL per config), fetch `UID > watermark` with header-only parsing and FR-010 fallbacks, and expose mailbox max UID + UIDVALIDITY
+- [X] T015 [P] [US1] Implement `src/notifier.py`: `Notification` model, single-email and digest renderers per `contracts/notification.md`, POST to `https://api.telegram.org/bot<token>/sendMessage` via `requests`, mark delivered only on 2xx, escape text, and never include secrets
+- [X] T016 [US1] Implement `src/main.py` core flow (`RUN_MODE=once`): load config → load state → first-run baseline (set watermark to mailbox max, no replay) → fetch new → render single messages or a digest by `DIGEST_THRESHOLD` → deliver → advance watermark per delivered UID → persist state with `last_status=ok`
 
 **Checkpoint**: User Story 1 is fully functional and independently testable — this is the MVP
 
@@ -84,13 +84,13 @@ Single-project Python CLI (per plan.md): `src/` and `tests/` at repository root.
 
 ### Tests for User Story 2 ⚠️
 
-- [ ] T017 [P] [US2] Unit test the window guard in `tests/unit/test_main.py`: inside vs. outside the window including the 08:00 and 17:00 boundaries, and correct behavior across a CET/CEST transition using `zoneinfo`
+- [X] T017 [P] [US2] Unit test the window guard in `tests/unit/test_main.py`: inside vs. outside the window including the 08:00 and 17:00 boundaries, and correct behavior across a CET/CEST transition using `zoneinfo`
 
 ### Implementation for User Story 2
 
-- [ ] T018 [US2] Add the timezone-aware window guard to `src/main.py` using `zoneinfo`: when the current `TIMEZONE` time is outside `SCHEDULE_START`–`SCHEDULE_END`, exit early with `last_status=skipped` and no fetch/notify (FR-005)
-- [ ] T019 [P] [US2] Create `deploy/crontab.example` with the `*/30 8-17 * * *` line for `my-server` (Europe/Berlin host TZ) invoking `uv run python -m src.main`, logging to `data/cron.log`
-- [ ] T020 [US2] Document scheduling in `README.md`: cron install steps, host-clock/`timedatectl` Europe/Berlin requirement, and how the in-app guard backstops cron
+- [X] T018 [US2] Add the timezone-aware window guard to `src/main.py` using `zoneinfo`: when the current `TIMEZONE` time is outside `SCHEDULE_START`–`SCHEDULE_END`, exit early with `last_status=skipped` and no fetch/notify (FR-005)
+- [X] T019 [P] [US2] Create `deploy/crontab.example` with the `*/30 8-17 * * *` line for `my-server` (Europe/Berlin host TZ) invoking `uv run python -m src.main`, logging to `data/cron.log`
+- [X] T020 [US2] Document scheduling in `README.md`: cron install steps, host-clock/`timedatectl` Europe/Berlin requirement, and how the in-app guard backstops cron
 
 **Checkpoint**: Stories 1 AND 2 both work independently
 
@@ -104,15 +104,15 @@ Single-project Python CLI (per plan.md): `src/` and `tests/` at repository root.
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T021 [P] [US3] Failure-handling unit tests in `tests/unit/test_main.py`: IMAP connect/auth failure → no notify, `last_status=error`, non-zero exit; partial delivery advances only to the highest contiguous delivered UID; second concurrent run skips on held lock
-- [ ] T022 [P] [US3] UIDVALIDITY-guard unit test in `tests/unit/test_storage.py`: changed `UIDVALIDITY` resets the watermark to the current mailbox max and updates `uidvalidity` without replaying the mailbox
-- [ ] T023 [US3] e2e failure/recovery test in `tests/e2e/test_flow.py`: unreachable/auth-failed run sends nothing and leaves state unchanged; the next successful run notifies only new mail (no re-notify of old)
+- [X] T021 [P] [US3] Failure-handling unit tests in `tests/unit/test_main.py`: IMAP connect/auth failure → no notify, `last_status=error`, non-zero exit; partial delivery advances only to the highest contiguous delivered UID; second concurrent run skips on held lock
+- [X] T022 [P] [US3] UIDVALIDITY-guard unit test in `tests/unit/test_storage.py`: changed `UIDVALIDITY` resets the watermark to the current mailbox max and updates `uidvalidity` without replaying the mailbox
+- [X] T023 [US3] e2e failure/recovery test in `tests/e2e/test_flow.py`: unreachable/auth-failed run sends nothing and leaves state unchanged; the next successful run notifies only new mail (no re-notify of old)
 
 ### Implementation for User Story 3
 
-- [ ] T024 [US3] Add the UIDVALIDITY guard to `src/storage.py`/`src/mailbox.py`: when the server's `UIDVALIDITY` differs from the stored value (non-null), reset the watermark to the current mailbox max, update `uidvalidity`, and record the reset to stderr (research §2)
-- [ ] T025 [US3] Add a non-blocking skip-if-locked file lock under `DATA_DIR` in `src/main.py`: if a prior run holds the lock, exit immediately with `last_status=skipped` (Edge Case "Overlapping runs")
-- [ ] T026 [US3] Add error handling to `src/main.py`: catch IMAP connect/auth and Telegram delivery failures, log to stderr without secrets, exit non-zero with `last_status=error`, and advance the watermark only to the highest contiguous delivered UID so undelivered mail stays new (FR-008, FR-009, Story 3 §3)
+- [X] T024 [US3] Add the UIDVALIDITY guard to `src/storage.py`/`src/mailbox.py`: when the server's `UIDVALIDITY` differs from the stored value (non-null), reset the watermark to the current mailbox max, update `uidvalidity`, and record the reset to stderr (research §2)
+- [X] T025 [US3] Add a non-blocking skip-if-locked file lock under `DATA_DIR` in `src/main.py`: if a prior run holds the lock, exit immediately with `last_status=skipped` (Edge Case "Overlapping runs")
+- [X] T026 [US3] Add error handling to `src/main.py`: catch IMAP connect/auth and Telegram delivery failures, log to stderr without secrets, exit non-zero with `last_status=error`, and advance the watermark only to the highest contiguous delivered UID so undelivered mail stays new (FR-008, FR-009, Story 3 §3)
 
 **Checkpoint**: All user stories independently functional
 
@@ -122,8 +122,8 @@ Single-project Python CLI (per plan.md): `src/` and `tests/` at repository root.
 
 **Purpose**: Documentation, gates, and end-to-end validation
 
-- [ ] T027 [P] Complete `README.md`: feature overview, full configuration table (all `contracts/config.md` variables), `uv` setup, and the quickstart/quality-gate commands
-- [ ] T028 Run the quality gates from `quickstart.md`: `uv run ruff check .`, `uv run ruff format --check .`, and `uv run pytest tests/` — all MUST pass
+- [X] T027 [P] Complete `README.md`: feature overview, full configuration table (all `contracts/config.md` variables), `uv` setup, and the quickstart/quality-gate commands
+- [X] T028 Run the quality gates from `quickstart.md`: `uv run ruff check .`, `uv run ruff format --check .`, and `uv run pytest tests/` — all MUST pass
 - [ ] T029 Execute the `quickstart.md` manual validation: a real `RUN_MODE=once` baseline run sends no notifications, then a test email produces one Telegram message with sender + subject
 
 ---
