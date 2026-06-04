@@ -1,0 +1,12 @@
+# Uni Hildesheim email notifier — my-server crontab
+#
+# Runs every 30 minutes (:00 and :30) for hours 08–17 inclusive, so the final
+# check fires at 17:00. Scheduling is driven by the host clock, which MUST be
+# set to Europe/Berlin so the 08:00–17:00 window stays correct across CET/CEST
+# (DST) transitions. The program also guards the window internally, so an
+# out-of-window invocation safely does nothing.
+#
+# Adjust the project path and the absolute `uv` path to match the deployment.
+# Install with: crontab -e   (then paste the line below)
+
+*/30 8-17 * * * cd /home/user/uni-mail-finder && /home/user/.local/bin/uv run python -m src.main >> data/cron.log 2>&1

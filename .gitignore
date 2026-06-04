@@ -1,0 +1,11 @@
+# Secrets and environment
+.env
+
+# Runtime state (keep the directory, ignore its contents)
+data/*
+!data/.gitkeep
+
+# Python
+__pycache__/
+*.pyc
+.venv/
