@@ -1,6 +1,13 @@
 # uni-mail-finder
 
+[![CI](https://github.com/tiagomorato/uni-mail-finder/actions/workflows/ci.yml/badge.svg)](https://github.com/tiagomorato/uni-mail-finder/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-75%20passing-brightgreen)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+
 Telegram notifier for new University of Hildesheim emails over IMAP.
+
+> Part of a small suite of automations for university portals, alongside [lsf-grade-finder](https://github.com/tiagomorato/lsf-grade-finder) (new grades) and [learnweb-content-finder](https://github.com/tiagomorato/learnweb-content-finder) (course material changes).
 
 Polls the university IMAP mailbox (`imap.uni-hildesheim.de:993`, SSL) and, for
 each newly arrived email, sends a Telegram summary followed by the full email as
@@ -41,7 +48,7 @@ acting within the configured working-hours window.
 git clone <repo-url> uni-mail-finder && cd uni-mail-finder
 uv sync                      # installs imap-tools, requests, python-dotenv (+ dev)
 cp .env.example .env
-# edit .env: set IMAP_PASSWORD, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+# edit .env: set IMAP_USER, IMAP_PASSWORD, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 ```
 
 Run a manual once-cycle (verifies config + connectivity):
@@ -65,7 +72,7 @@ fast with a message naming the variable (never echoing secrets).
 | `IMAP_HOST` | no | `imap.uni-hildesheim.de` | non-empty string |
 | `IMAP_PORT` | no | `993` | integer 1–65535 |
 | `IMAP_SSL` | no | `true` | `true`/`false` |
-| `IMAP_USER` | **yes** | `jdoe` | account login |
+| `IMAP_USER` | **yes** | — | account login |
 | `IMAP_PASSWORD` | **yes** | — | **secret**, never logged |
 | `IMAP_FOLDER` | no | `INBOX` | monitored folder |
 | `TELEGRAM_BOT_TOKEN` | **yes** | — | **secret**, never logged |
@@ -141,9 +148,20 @@ for observability. cron output is appended to `data/cron.log`. Connection or
 delivery failures are written to stderr (captured in the log) and exit non-zero
 without notifying.
 
+## How it was built
+
+This project was built spec-first with [GitHub Spec Kit](https://github.com/github/spec-kit) and Claude Code. Before any code was written, the requirements, design decisions and test plan were written down and reviewed in [`specs/001-uni-email-notifier/`](specs/001-uni-email-notifier/):
+
+| Document | Content |
+|---|---|
+| [`spec.md`](specs/001-uni-email-notifier/spec.md) | User stories with Given/When/Then acceptance scenarios and functional requirements |
+| [`research.md`](specs/001-uni-email-notifier/research.md) | Design decisions, e.g. UID watermark vs. read/unread flags |
+| [`contracts/`](specs/001-uni-email-notifier/contracts/) | Config, state-file and notification contracts that the tests check |
+| [`tasks.md`](specs/001-uni-email-notifier/tasks.md) | Task breakdown with tests written before implementation |
+
 ## Development & quality gates
 
-All three MUST pass before any change:
+All three run in [CI](.github/workflows/ci.yml) on every push and MUST pass before any change:
 
 ```bash
 uv run ruff check .
