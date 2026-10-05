@@ -18,6 +18,7 @@ API = "https://api.telegram.org/botsecret-token/sendMessage"
 
 def _config(data_dir, **overrides):
     env = {
+        "IMAP_USER": "jdoe",
         "IMAP_PASSWORD": "pw",
         "TELEGRAM_BOT_TOKEN": "secret-token",
         "TELEGRAM_CHAT_ID": "99",

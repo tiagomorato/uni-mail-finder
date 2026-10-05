@@ -5,7 +5,7 @@ Get the notifier running on `my-server` in under 30 minutes (SC-006).
 ## Prerequisites
 
 - Python ≥ 3.10 and [`uv`](https://docs.astral.sh/uv/) on `my-server`.
-- University of Hildesheim IMAP credentials (account `jdoe`, mailbox password).
+- University of Hildesheim IMAP credentials (account login and mailbox password).
 - A Telegram bot token (from `@BotFather`) and your chat ID.
 - Network access from `my-server` to `mailf1.rz.uni-hildesheim.de:993` (VPN if required).
 
@@ -24,7 +24,7 @@ cp .env.example .env
 # edit .env: set IMAP_PASSWORD, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 ```
 
-Non-secret defaults (host, port, user `jdoe`, window 08:00–17:00 Europe/Berlin) are already
+Non-secret defaults (host, port, window 08:00–17:00 Europe/Berlin) are already
 filled in. See `contracts/config.md` for every variable.
 
 ## 3. Verify configuration & connectivity (manual once-run)

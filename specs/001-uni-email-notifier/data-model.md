@@ -63,7 +63,7 @@ Loaded and validated by `config.py` at startup; fail-fast on missing/invalid (FR
 | `IMAP_HOST` | str | no | `mailf1.rz.uni-hildesheim.de` | |
 | `IMAP_PORT` | int | no | `993` | |
 | `IMAP_SSL` | bool | no | `true` | |
-| `IMAP_USER` | str | yes | `jdoe` | account login |
+| `IMAP_USER` | str | yes | — | account login |
 | `IMAP_PASSWORD` | str (secret) | yes | — | never logged (FR-007) |
 | `IMAP_FOLDER` | str | no | `INBOX` | |
 | `TELEGRAM_BOT_TOKEN` | str (secret) | yes | — | never logged (FR-007) |

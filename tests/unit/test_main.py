@@ -17,6 +17,7 @@ API = "https://api.telegram.org/botsecret-token/sendMessage"
 
 def _config(**overrides):
     env = {
+        "IMAP_USER": "jdoe",
         "IMAP_PASSWORD": "pw",
         "TELEGRAM_BOT_TOKEN": "secret-token",
         "TELEGRAM_CHAT_ID": "99",
@@ -75,6 +76,7 @@ def test_window_correct_across_dst_winter():
 
 def _run_config(data_dir, **overrides):
     env = {
+        "IMAP_USER": "jdoe",
         "IMAP_PASSWORD": "pw",
         "TELEGRAM_BOT_TOKEN": "secret-token",
         "TELEGRAM_CHAT_ID": "99",

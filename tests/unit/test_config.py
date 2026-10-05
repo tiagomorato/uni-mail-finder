@@ -9,6 +9,7 @@ from src.config import ConfigError, load_config
 
 def _valid_env(**overrides):
     env = {
+        "IMAP_USER": "jdoe",
         "IMAP_PASSWORD": "secret-pass",
         "TELEGRAM_BOT_TOKEN": "secret-token",
         "TELEGRAM_CHAT_ID": "12345",
@@ -22,7 +23,6 @@ def test_defaults_applied():
     assert cfg.imap_host == "imap.uni-hildesheim.de"
     assert cfg.imap_port == 993
     assert cfg.imap_ssl is True
-    assert cfg.imap_user == "jdoe"
     assert cfg.imap_folder == "INBOX"
     assert str(cfg.timezone) == "Europe/Berlin"
     assert cfg.schedule_start == time(8, 0)
@@ -33,7 +33,7 @@ def test_defaults_applied():
 
 
 @pytest.mark.parametrize(
-    "missing", ["IMAP_PASSWORD", "TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"]
+    "missing", ["IMAP_USER", "IMAP_PASSWORD", "TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"]
 )
 def test_missing_required_rejected(missing):
     env = _valid_env()

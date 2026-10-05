@@ -24,7 +24,6 @@ _DEFAULTS = {
     "IMAP_HOST": "imap.uni-hildesheim.de",
     "IMAP_PORT": "993",
     "IMAP_SSL": "true",
-    "IMAP_USER": "jdoe",
     "IMAP_FOLDER": "INBOX",
     "TIMEZONE": "Europe/Berlin",
     "SCHEDULE_START": "08:00",

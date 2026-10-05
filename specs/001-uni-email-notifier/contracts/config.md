@@ -11,7 +11,7 @@ human-readable stderr error naming the offending variable, without echoing secre
 | `IMAP_HOST` | no | `mailf1.rz.uni-hildesheim.de` | non-empty string |
 | `IMAP_PORT` | no | `993` | integer 1–65535 |
 | `IMAP_SSL` | no | `true` | boolean (`true`/`false`) |
-| `IMAP_USER` | **yes** | `jdoe` | non-empty string |
+| `IMAP_USER` | **yes** | — | non-empty string |
 | `IMAP_PASSWORD` | **yes** | — | non-empty; **secret**, never logged |
 | `IMAP_FOLDER` | no | `INBOX` | non-empty string |
 | `TELEGRAM_BOT_TOKEN` | **yes** | — | non-empty; **secret**, never logged |
@@ -38,7 +38,7 @@ human-readable stderr error naming the offending variable, without echoing secre
 IMAP_HOST=mailf1.rz.uni-hildesheim.de
 IMAP_PORT=993
 IMAP_SSL=true
-IMAP_USER=jdoe
+IMAP_USER=              # required
 IMAP_PASSWORD=            # required secret
 IMAP_FOLDER=INBOX
 
